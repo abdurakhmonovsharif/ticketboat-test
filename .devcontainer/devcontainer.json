@@ -1,0 +1,47 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+	"name": "NRD Tech Python 3.10",
+	"containerEnv": {
+		"PYTHONPATH": "src",
+		"PYTHONUNBUFFERED": "1",
+		"ENVIRONMENT": "dev"
+    },
+ 
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/python:1-3.10-bookworm",
+	"features": {
+		"ghcr.io/devcontainers-contrib/features/coverage-py:2": {}
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "bash .devcontainer/post_create_commands.sh",
+
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+		    // Add the IDs of extensions you want installed when the container is created.
+		    "extensions": [
+			  "ms-python.python",
+			  "ms-python.black-formatter",
+			  "tamasfe.even-better-toml",
+			  "HashiCorp.terraform",
+			  "ms-azuretools.vscode-docker"
+		    ],
+			"python.terminal.activateEnvironment": false,
+			"python.defaultInterpreterPath": "/usr/local/bin/python"
+		}
+	},
+
+	"mounts": [
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.aws/config,target=/home/vscode/.aws/config,type=bind,consistency=cached",
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.aws/credentials,target=/home/vscode/.aws/credentials,type=bind,consistency=cached",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/vscode/.gitconfigs,type=bind,consistency=cached"
+    ],
+
+	"remoteUser": "vscode"
+}

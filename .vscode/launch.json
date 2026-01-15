@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // Runs your file that calls uvicorn.run(app, host="0.0.0.0", port=8080)
+      "name": "FastAPI: run main.py (debug)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/app/main.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "envFile": "${workspaceFolder}/.env",
+      "justMyCode": true
+    },
+    {
+      // Starts uvicorn via module (nice if you want --reload)
+      "name": "FastAPI: uvicorn (module, --reload)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": [
+        "src.app.main:app",
+        "--host", "0.0.0.0",
+        "--port", "8080",
+        "--reload"
+      ],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "envFile": "${workspaceFolder}/.env",
+      "justMyCode": true
+    }
+  ]
+}

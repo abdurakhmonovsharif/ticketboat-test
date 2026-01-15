@@ -1,0 +1,7 @@
+There are two projects in this workspace. We have a frontend called ticketboat-admin-frontend and a backend called ticketboat-admin-api-python. 
+
+The frontend is a React application that uses antd for the UI and styled-components for styling. It is using typescript.
+
+The backend is a Python application that uses FastAPI for the API and Pydantic for the data models. It is using python.
+
+The frontend is using the backend for the API calls.

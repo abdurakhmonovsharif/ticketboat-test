@@ -1,0 +1,29 @@
+POST http://127.0.0.1:8000/example/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "something": "value"
+}
+
+###
+
+GET http://127.0.0.1:8000/example/12345
+Accept: application/json
+
+###
+
+PUT http://127.0.0.1:8000/example/12345
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "updatedValue1"
+}
+
+###
+
+DELETE http://127.0.0.1:8000/example/12345
+Accept: application/json
+
+###
