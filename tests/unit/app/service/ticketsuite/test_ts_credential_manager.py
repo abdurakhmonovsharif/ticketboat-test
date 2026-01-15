@@ -48,6 +48,23 @@ async def test_get_automators_by_ids_handles_database_errors():
 
 
 @pytest.mark.asyncio
+async def test_get_automators_by_ids_returns_empty_result():
+    fetch_mock = AsyncMock(return_value=[])
+    fake_db = SimpleNamespace(fetch_all=fetch_mock)
+
+    with patch(
+        "app.service.ticketsuite.ts_credential_manager.get_pg_readonly_database",
+        return_value=fake_db,
+    ):
+        result = await get_automators_by_ids([])
+
+    assert result == []
+    fetch_mock.assert_awaited_once()
+    args, kwargs = fetch_mock.await_args
+    assert kwargs["values"] == {"automator_ids": []}
+
+
+@pytest.mark.asyncio
 async def test_load_from_database_returns_credentials():
     manager = TSCredentialManager()
     automator_id = uuid4()
@@ -142,6 +159,22 @@ async def test_get_credentials_respects_cache_ttl_and_refreshes():
     assert second_result is first_creds
     assert third_result is second_creds
     assert load_mock.await_count == 2
+
+
+@pytest.mark.asyncio
+async def test_get_credentials_returns_none_when_loader_returns_no_credentials():
+    manager = TSCredentialManager()
+    automator_id = uuid4()
+    load_mock = AsyncMock(return_value=None)
+
+    with patch.object(
+        TSCredentialManager, "_load_from_database", load_mock
+    ):
+        result = await manager.get_credentials_for_automator(automator_id)
+
+    assert result is None
+    assert manager._cache == {}
+    load_mock.assert_awaited_once_with(automator_id)
 
 
 def test_clear_cache_removes_stored_credentials():
